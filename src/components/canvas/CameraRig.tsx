@@ -41,10 +41,11 @@ const WAYPOINTS = [
 interface CameraRigProps {
   progressRef?: RefObject<number>;
   progress?: number;
+  isBooted?: boolean;
 }
 
-export function CameraRig({ progressRef, progress: propProgress }: CameraRigProps) {
-  const currentPos = useRef(new THREE.Vector3(0, 0, 5.5));
+export function CameraRig({ progressRef, progress: propProgress, isBooted = true }: CameraRigProps) {
+  const currentPos = useRef(new THREE.Vector3(0, 0, 10));
   const currentTarget = useRef(new THREE.Vector3(0, 0, 0));
   const mousePos = useRef({ x: 0, y: 0 });
 
@@ -72,18 +73,27 @@ export function CameraRig({ progressRef, progress: propProgress }: CameraRigProp
     const nextWaypoint =
       WAYPOINTS[Math.min(segmentIndex + 1, totalSegments)];
 
-    // Interpolated target position and lookAt point
-    const targetPos = new THREE.Vector3().lerpVectors(
-      currentWaypoint.pos,
-      nextWaypoint.pos,
-      fraction
-    );
+    // If not booted yet, hold camera back at z=10
+    let targetPos: THREE.Vector3;
+    let targetLookAt: THREE.Vector3;
 
-    const targetLookAt = new THREE.Vector3().lerpVectors(
-      currentWaypoint.target,
-      nextWaypoint.target,
-      fraction
-    );
+    if (!isBooted) {
+      targetPos = new THREE.Vector3(0, 0, 10);
+      targetLookAt = new THREE.Vector3(0, 0, 0);
+    } else {
+      // Interpolated target position and lookAt point along 3D scroll waypoints
+      targetPos = new THREE.Vector3().lerpVectors(
+        currentWaypoint.pos,
+        nextWaypoint.pos,
+        fraction
+      );
+
+      targetLookAt = new THREE.Vector3().lerpVectors(
+        currentWaypoint.target,
+        nextWaypoint.target,
+        fraction
+      );
+    }
 
     // Add interactive cursor parallax
     const parallaxX = mousePos.current.x * 0.45;

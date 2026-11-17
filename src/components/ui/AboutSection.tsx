@@ -1,6 +1,6 @@
 "use client";
 
-import { PERSONAL_DATA } from "@/data/portfolioData";
+import { PERSONAL_DATA } from "@/data/portfolio";
 import { Terminal, ShieldCheck, Cpu, Code2, Award, GraduationCap } from "lucide-react";
 
 export function AboutSection() {

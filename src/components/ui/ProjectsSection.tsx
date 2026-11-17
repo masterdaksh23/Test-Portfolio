@@ -1,6 +1,6 @@
 "use client";
 
-import { PROJECTS_DATA } from "@/data/portfolioData";
+import { PROJECTS_DATA } from "@/data/portfolio";
 import { ExternalLink, Github, Sparkles, Sprout, Building2, Cpu, ArrowUpRight } from "lucide-react";
 
 export function ProjectsSection() {

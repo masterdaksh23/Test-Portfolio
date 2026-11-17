@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { HACKATHONS_DATA } from "@/data/portfolioData";
+import { HACKATHONS_DATA } from "@/data/portfolio";
 import { Trophy, Shield, Flame, Terminal, CheckCircle2, ChevronRight, Layers } from "lucide-react";
 
 export function HackathonsSection() {

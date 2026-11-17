@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PERSONAL_DATA } from "@/data/portfolioData";
+import { PERSONAL_DATA } from "@/data/portfolio";
 import { Mail, Linkedin, Github, Send, Copy, Check, Terminal, Sparkles, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 

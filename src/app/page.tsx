@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Navigation } from "@/components/ui/Navigation";
 import { HeroSection } from "@/components/ui/HeroSection";
@@ -11,6 +11,7 @@ import { HackathonsSection } from "@/components/ui/HackathonsSection";
 import { ProjectsSection } from "@/components/ui/ProjectsSection";
 import { CompetitionsSection } from "@/components/ui/CompetitionsSection";
 import { ContactSection } from "@/components/ui/ContactSection";
+import { BootSequence } from "@/components/Intro/BootSequence";
 
 // Dynamically import 3D Canvas Scene
 const Scene = dynamic(
@@ -50,6 +51,7 @@ function SceneLoader() {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [isBooted, setIsBooted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const scrollProgressRef = useRef(0);
 
@@ -58,9 +60,23 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Sync scroll position with 3D camera rig & active navigation state
+  // Lock body scroll during boot sequence
   useEffect(() => {
     if (!mounted) return;
+    if (!isBooted) {
+      document.body.style.overflow = "hidden";
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [mounted, isBooted]);
+
+  // Sync scroll position with 3D camera rig & active navigation state
+  useEffect(() => {
+    if (!mounted || !isBooted) return;
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -83,7 +99,7 @@ export default function Home() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, [mounted]);
+  }, [mounted, isBooted]);
 
   const handleNavigate = (sectionIndex: number) => {
     const el = document.getElementById(`section-${sectionIndex}`);
@@ -97,23 +113,37 @@ export default function Home() {
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-background overflow-x-hidden selection:bg-neon-cyan selection:text-black">
+    <div className="relative w-full min-h-screen bg-background overflow-x-hidden selection:bg-neon-cyan selection:text-black font-body">
       {/* Custom Cyber Dual-Ring Cursor */}
       <CustomCursor />
 
-      {/* Fixed HUD Navigation */}
-      <Navigation onNavigate={handleNavigate} activeSection={activeSection} />
+      {/* Cinematic Terminal Boot Sequence */}
+      <AnimatePresence>
+        {!isBooted && (
+          <BootSequence onEnter={() => setIsBooted(true)} />
+        )}
+      </AnimatePresence>
 
-      {/* 3D Background Canvas */}
-      <Scene progressRef={scrollProgressRef} />
+      {/* Fixed HUD Navigation (Revealed when booted) */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: isBooted ? 1 : 0, y: isBooted ? 0 : -20 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="pointer-events-none"
+      >
+        <Navigation onNavigate={handleNavigate} activeSection={activeSection} />
+      </motion.div>
+
+      {/* 3D Background Canvas (Always running in background, transitioning camera z: 10 -> z: 5.5 on boot) */}
+      <Scene progressRef={scrollProgressRef} isBooted={isBooted} />
 
       {/* HTML Content Overlay */}
       <main className="relative z-10 w-full pointer-events-auto">
         <section id="section-0" className="w-full min-h-screen flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            animate={{ opacity: isBooted ? 1 : 0, y: isBooted ? 0 : 30 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
             className="w-full"
           >
             <HeroSection onExploreClick={() => handleNavigate(1)} />

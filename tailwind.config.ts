@@ -24,6 +24,8 @@ const config: Config = {
       fontFamily: {
         heading: ["Orbitron", "system-ui", "-apple-system", "sans-serif"],
         body: ["Space Grotesk", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["'Fira Code'", "'JetBrains Mono'", "monospace"],
+        code: ["'Fira Code'", "'JetBrains Mono'", "monospace"],
       },
       boxShadow: {
         "glow-cyan": "0 0 25px -5px rgba(0, 229, 255, 0.4)",
