@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowDown, Code2, Trophy, Rocket, Shield, Laptop } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface HeroSectionProps {
   onExploreClick?: () => void;
@@ -36,10 +35,10 @@ export function HeroSection({ onExploreClick }: HeroSectionProps) {
         Bridging spatial 3D web engineering, secure cloud architecture, and competitive cyber operations.
       </p>
 
-      {/* CENTER STAGE: VS Code Editor Card */}
-      <div className="w-full max-w-xl mx-auto mb-6 text-left rounded-xl bg-black/50 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)] overflow-hidden backdrop-blur-xl group hover:border-neon-cyan/40 transition-all duration-300">
-        {/* macOS Window Controls & Tab Bar */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-black/70 border-b border-white/10">
+      {/* CENTER STAGE: VS Code Style Editor Card */}
+      <div className="w-full max-w-xl mx-auto mb-6 text-left rounded-2xl bg-gray-900/80 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)] overflow-hidden backdrop-blur-xl group hover:border-neon-cyan/40 transition-all duration-300">
+        {/* macOS Window Controls (Red, Yellow, Green dots) & Title Bar */}
+        <div className="flex items-center justify-between px-4 py-2.5 bg-black/60 border-b border-white/10">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block shadow-[0_0_8px_rgba(255,95,86,0.4)]" />
             <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block shadow-[0_0_8px_rgba(255,189,46,0.4)]" />
@@ -56,20 +55,20 @@ export function HeroSection({ onExploreClick }: HeroSectionProps) {
         <div className="p-4 sm:p-5 font-mono text-xs sm:text-sm bg-black/40 overflow-x-auto leading-relaxed">
           <pre className="text-gray-300 font-mono">
             <code>
-              <span className="text-purple-400">class</span>{" "}
+              <span className="text-purple-400 font-semibold">class</span>{" "}
               <span className="text-neon-yellow font-bold">Daksh</span>{" "}
-              <span className="text-purple-400">extends</span>{" "}
+              <span className="text-purple-400 font-semibold">extends</span>{" "}
               <span className="text-blue-400">Developer</span> &#123;{"\n"}
               {"  "}<span className="text-gray-300">focus</span> = [
               <span className="text-[#00FF41]">&quot;Full-Stack&quot;</span>,{" "}
               <span className="text-[#00FF41]">&quot;Cybersecurity&quot;</span>,{" "}
               <span className="text-[#00FF41]">&quot;AI&quot;</span>];{"\n\n"}
-              {"  "}<span className="text-purple-400">async</span>{" "}
+              {"  "}<span className="text-purple-400 font-semibold">async</span>{" "}
               <span className="text-blue-300">build</span>() &#123;{"\n"}
-              {"    "}<span className="text-purple-400">await</span>{" "}
+              {"    "}<span className="text-purple-400 font-semibold">await</span>{" "}
               <span className="text-gray-300">this</span>.<span className="text-blue-300">ship</span>(
               <span className="text-neon-cyan">&quot;Odyssey 20 (Agri-Tech)&quot;</span>);{"\n"}
-              {"    "}<span className="text-purple-400">await</span>{" "}
+              {"    "}<span className="text-purple-400 font-semibold">await</span>{" "}
               <span className="text-gray-300">this</span>.<span className="text-blue-300">win</span>(
               <span className="text-neon-yellow">&quot;Top 15 National CTF&quot;</span>);{"\n"}
               {"  "}&#125;{"\n"}
